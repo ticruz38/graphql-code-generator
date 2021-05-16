@@ -987,10 +987,10 @@ export type WithTypename<T extends { __typename?: any }> = { [K in Exclude<keyof
 };
 
 export type GraphCacheKeysConfig = {
+  Comment?: (data: WithTypename<Comment>) => null | string;
   Entry?: (data: WithTypename<Entry>) => null | string;
   Repository?: (data: WithTypename<Repository>) => null | string;
   User?: (data: WithTypename<User>) => null | string;
-  Comment?: (data: WithTypename<Comment>) => null | string;
   Vote?: (data: WithTypename<Vote>) => null | string;
 };
 
@@ -999,6 +999,13 @@ export type GraphCacheResolvers = {
     feed?: GraphCacheResolver<WithTypename<Query>, QueryFeedArgs, Array<WithTypename<Entry> | string>>;
     entry?: GraphCacheResolver<WithTypename<Query>, QueryEntryArgs, WithTypename<Entry> | string>;
     currentUser?: GraphCacheResolver<WithTypename<Query>, null, WithTypename<User> | string>;
+  };
+  Comment?: {
+    id?: GraphCacheResolver<WithTypename<Comment>, null, Scalars['Int'] | string>;
+    postedBy?: GraphCacheResolver<WithTypename<Comment>, null, WithTypename<User> | string>;
+    createdAt?: GraphCacheResolver<WithTypename<Comment>, null, Scalars['Float'] | string>;
+    content?: GraphCacheResolver<WithTypename<Comment>, null, Scalars['String'] | string>;
+    repoName?: GraphCacheResolver<WithTypename<Comment>, null, Scalars['String'] | string>;
   };
   Entry?: {
     repository?: GraphCacheResolver<WithTypename<Entry>, null, WithTypename<Repository> | string>;
@@ -1024,13 +1031,6 @@ export type GraphCacheResolvers = {
     login?: GraphCacheResolver<WithTypename<User>, null, Scalars['String'] | string>;
     avatar_url?: GraphCacheResolver<WithTypename<User>, null, Scalars['String'] | string>;
     html_url?: GraphCacheResolver<WithTypename<User>, null, Scalars['String'] | string>;
-  };
-  Comment?: {
-    id?: GraphCacheResolver<WithTypename<Comment>, null, Scalars['Int'] | string>;
-    postedBy?: GraphCacheResolver<WithTypename<Comment>, null, WithTypename<User> | string>;
-    createdAt?: GraphCacheResolver<WithTypename<Comment>, null, Scalars['Float'] | string>;
-    content?: GraphCacheResolver<WithTypename<Comment>, null, Scalars['String'] | string>;
-    repoName?: GraphCacheResolver<WithTypename<Comment>, null, Scalars['String'] | string>;
   };
   Vote?: {
     vote_value?: GraphCacheResolver<WithTypename<Vote>, null, Scalars['Int'] | string>;
